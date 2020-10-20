@@ -315,7 +315,7 @@ rest in background buffers."
                   :suggestion-function (bookmark-suggestion-filter)
                   :multi-selection-p t)))
     (dolist (entry (rest entries))
-      (make-buffer :url (object-string (url entry))))
+      (make-buffer :url (object-string (url entry)) :child-p t))
     (buffer-load (url (first entries)))))
 
 (define-command set-url-from-bookmark-new-buffer ()
@@ -326,7 +326,7 @@ rest in background buffers."
                   :suggestion-function (bookmark-suggestion-filter)
                   :multi-selection-p t)))
     (dolist (entry (rest entries))
-      (make-buffer :url (object-string (url entry))))
+      (make-buffer :url (object-string (url entry)) :child-p t))
     (buffer-load (url (first entries))
                  :buffer (make-buffer-focus))))
 

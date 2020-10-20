@@ -284,7 +284,7 @@ identifier for every hinted element."
   (echo "Unsupported operation for hint: can't open in new buffer."))
 
 (defmethod %follow-hint-new-buffer ((link-hint link-hint))
-  (let ((new-buffer (make-buffer)))
+  (let ((new-buffer (make-buffer :child-p t)))
     (buffer-load (url link-hint) :buffer new-buffer)))
 
 (defmethod %follow-hint-new-buffer ((hint hint))
