@@ -96,6 +96,10 @@ See `current-window' for the user-facing function.")
    (buffers :initform (make-hash-table :test #'equal)
             :documentation "To manipulate the list of buffers,
 see `buffer-list', `buffers-get', `buffers-set' and `buffers-delete'.")
+   (clean-dead-buffer-history-p nil
+                                :type boolean
+                                :documentation "Whether the buffer-local history will be deleted
+from the global history tree on buffer deletion.")
    (total-buffer-count 0
                        :export nil
                        :documentation "This is used to generate unique buffer

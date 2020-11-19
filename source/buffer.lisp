@@ -553,7 +553,8 @@ Rebinds the history to the oldest child otherwise."
         (window-set-active-buffer parent-window
                                   replacement-buffer)))
     (ffi-buffer-delete buffer)
-    (buffer-local-history-clean buffer)
+    (when (clean-dead-buffer-history-p *browser*)
+      (buffer-local-history-clean buffer))
     (buffers-delete (id buffer))
     (add-to-recent-buffers buffer)
     (store (data-profile buffer) (history-path buffer))))
