@@ -198,7 +198,9 @@ Don't run this from a REPL, prefer `start' instead."
         (opts:get-opts))
     (setf *keep-alive* nil)             ; Not a REPL.
     (in-package :nyxt-user)
-    (apply #'start (append options (list :urls free-args)))))
+    (apply #'start (if options
+                       (list (list options) :urls free-args)
+                       (list :urls free-args)))))
 
 (declaim (ftype (function (trivial-types:pathname-designator &key (:package (or null package))))
                 load-lisp))
