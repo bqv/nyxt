@@ -198,9 +198,7 @@ Don't run this from a REPL, prefer `start' instead."
         (opts:get-opts))
     (setf *keep-alive* nil)             ; Not a REPL.
     (in-package :nyxt-user)
-    (apply #'start (if options
-                       (list (list options) :urls free-args)
-                       (list :urls free-args)))))
+    (apply #'start (list :options (list options) :urls free-args))))
 
 (declaim (ftype (function (trivial-types:pathname-designator &key (:package (or null package))))
                 load-lisp))
@@ -394,11 +392,11 @@ Otherwise bind socket."
         (uiop:quit))))
 
 (export-always 'start)
-(define-function start `(&rest options &key urls
-                               ,@(mapcar (alex:compose #'intern
-                                                       #'symbol-name
-                                                       #'opts::name)
-                                         opts::*options*))
+(define-function start `(&key options urls
+                              ,@(mapcar (alex:compose #'intern
+                                                      #'symbol-name
+                                                      #'opts::name)
+                                        opts::*options*))
   (format nil "Start the browser, loading URLs if any.
 URLs is a list of strings.
 The OPTIONS are the same as the command line options.
