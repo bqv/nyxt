@@ -588,7 +588,7 @@ sometimes yields the wrong reasult."
                                                 :url (url buffer) :id (id buffer))
                                  history
                                  :test #'equals)
-                (htree:current history))))
+                (initial-history-node buffer))))
     buffer))
 
 (export-always 'current-minibuffer)

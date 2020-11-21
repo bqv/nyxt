@@ -25,6 +25,10 @@ See the `data-path' class and the `expand-path' function.")
    (last-access (local-time:now)
                 :export nil
                 :documentation "Timestamp when the buffer was last switched to.")
+   (initial-history-node (htree:current (get-data (history-path (current-buffer))))
+                         :type (or null htree:node)
+                         :documentation "The history node that this buffer history starts from.
+Used to make sure children buffers properly branch from parent buffers in global history.")
    (modes :initform '()
           :documentation "The list of mode instances.
 Modes are instantiated after the `default-modes' slot, with `initialize-modes'
@@ -446,10 +450,8 @@ starting from the current buffer's history."
            (url (if (eq url :default)
                     (default-new-buffer-url buffer)
                     url)))
-      ;; We need start buffer history from root in case buffer is independent
-      ;; TODO: New history entries can be created much later than buffer creation. Too stateful.
       (unless child-p
-        (setf (htree:current history) (htree:root history)))
+        (setf (initial-history-node buffer) nil))
       (unless (url-empty-p url)
         (buffer-load url :buffer buffer))
       buffer)))
